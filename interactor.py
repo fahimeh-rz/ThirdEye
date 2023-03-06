@@ -59,17 +59,17 @@ def dictionary(text):
     return en
 
 
-def find_clickable_enable(view, text="", click=False, translate=True, exclude=["None"], obj_class=["android.widget.checkedtextview", "android.view.view", "android.widget.button", "android.widget.textview","android.widget.LinearLayout"], attr="Text"):
+def find_clickable_enable(view, text="", click=False, translate=True, exclude=["None"], obj_class=["android.widget.checkedtextview", "android.view.view", "android.widget.button", "android.widget.textview","android.widget.LinearLayout"], attr="text"):
     if (view.isClickable() or view.__getattr__('isEnabled')() or view.__getattr__('checkable')()) and view.getClass().lower() in obj_class:
-        if attr == "Text":
+        if attr.lower() == "text":
             # obj_text = (view.getText()).lower()
             obj_text = dictionary(view.getText()).lower(
             ) if translate else view.getText().lower()
-        elif attr == "Id":
+        elif attr.lower() == "id":
             obj_text = view.getId().lower()
             if "/" in obj_text:
                 obj_text = obj_text.split("/")[1]
-        elif attr == "CD":
+        elif attr.lower() in ("cd","content-desc"):
             # obj_text = (view.getContentDescription()).lower()
             obj_text = dictionary(view.getContentDescription()).lower(
             ) if translate else view.getContentDescription().lower()
@@ -518,11 +518,11 @@ class App:
                         if not self.d.is_app_open(self.p):
                             break
                         back_key -= 1
+                    elif futile == 3:
+                        self.dumb_interaction()
                     futile += 1
                     time.sleep(abs(futile)/2)
                     logging.debug("xxxxxx")
-                elif futile == 3:
-                    self.dumb_interaction()
                 else:
                     logging.debug("aaaaaa")
                     back_key = 3
