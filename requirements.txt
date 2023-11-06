@@ -1,4 +1,4 @@
-androidviewclient
+androidviewclient==21.16.10
 uiautomator
 translators==5.4.2
 androguard==3.4.0a1
